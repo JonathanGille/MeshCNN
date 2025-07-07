@@ -2,6 +2,7 @@ from options.test_options import TestOptions
 from data import DataLoader
 from models import create_model
 from util.writer import Writer
+import torch
 
 
 def run_test(epoch=-1):
@@ -22,4 +23,6 @@ def run_test(epoch=-1):
 
 
 if __name__ == '__main__':
+    print(torch.cuda.is_available()) 
+    print(torch.version.cuda)  
     run_test()

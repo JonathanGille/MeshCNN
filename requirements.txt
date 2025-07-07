@@ -1,0 +1,7 @@
+torch
+cython
+numpy
+matplotlib
+pip
+git+https://github.com/lanpa/tensorboardX.git
+pytest
