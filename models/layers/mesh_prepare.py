@@ -9,11 +9,23 @@ def fill_mesh(mesh2fill, file: str, opt):
         mesh_data = np.load(load_path, encoding='latin1', allow_pickle=True)
     else:
         mesh_data = from_scratch(file, opt)
+
+        ### DEBUGGING        
+        # for name in ['gemm_edges', 'vs', 'edges', 'edges_count', 've', 'v_mask', 'filename', 'sides', 'edge_lengths', 'edge_areas', 'features']:
+        #     val = getattr(mesh_data, name)
+        #     try:
+        #         arr = np.asanyarray(val)
+        #         print(f"{name} shape: {arr.shape}")
+        #     except Exception as e:
+        #         print(f"{name} Fehler: {e}")
+        
+        ve_array = np.array(mesh_data.ve, dtype=object) # get the right shape
         np.savez_compressed(load_path, gemm_edges=mesh_data.gemm_edges, vs=mesh_data.vs, edges=mesh_data.edges,
-                            edges_count=mesh_data.edges_count, ve=mesh_data.ve, v_mask=mesh_data.v_mask,
+                            edges_count=mesh_data.edges_count, ve=ve_array, v_mask=mesh_data.v_mask,
                             filename=mesh_data.filename, sides=mesh_data.sides,
                             edge_lengths=mesh_data.edge_lengths, edge_areas=mesh_data.edge_areas,
                             features=mesh_data.features)
+    
     mesh2fill.vs = mesh_data['vs']
     mesh2fill.edges = mesh_data['edges']
     mesh2fill.gemm_edges = mesh_data['gemm_edges']
